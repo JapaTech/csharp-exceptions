@@ -1,16 +1,17 @@
-﻿using Adopet.Attributes;
+﻿
 using Adopet.Models.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Adopet.Dtos;
 
 public record CadastroPetDto
 {
-    [CustomRequiredAttribute]
+    [Required]
     public string Nome { get; set; }
-    [CustomRequiredAttribute]
+    [Required]
     public int Idade { get; set; }
-    [CustomRequiredAttribute]
+    [Required]
     public TipoPet Tipo { get; set; }
-    [CustomRequiredAttribute]
+    [Required]
     public IFormFile Imagem { get; set; }
 }

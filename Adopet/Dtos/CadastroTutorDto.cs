@@ -1,11 +1,11 @@
-﻿using Adopet.Attributes;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Adopet.Api.Dto;
 public record CadastroTutorDto
 {
-    [CustomRequiredAttribute]
+    [Required]
     public string Nome { get; init; }
 
-    [CustomRequiredAttribute]
+    [Required]
     public string Email { get; init; }
 }

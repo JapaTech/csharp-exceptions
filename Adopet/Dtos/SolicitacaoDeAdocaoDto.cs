@@ -1,15 +1,15 @@
-﻿using Adopet.Attributes;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Adopet.Dtos;
 
 public record SolicitacaoDeAdocaoDto
 {
-    [CustomRequiredAttribute]
+    [Required]
     public long IdPet { get; init; }
 
-    [CustomRequiredAttribute]
+    [Required]
     public long IdTutor { get; init; }
 
-    [CustomRequiredAttribute]
+    [Required]
     public string Motivo { get; init; }
 }

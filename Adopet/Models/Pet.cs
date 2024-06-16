@@ -1,4 +1,4 @@
-﻿using Adopet.Attributes;
+﻿
 using Adopet.Dtos;
 using Adopet.Models.Enums;
 using System.ComponentModel.DataAnnotations;
@@ -8,7 +8,7 @@ namespace Adopet.Models;
 public class Pet
 {
     [Key]
-    [CustomRequiredAttribute]
+    [Required]
     public long Id { get; set; }
     public string Nome { get; set; }
     public int Idade { get; set; }

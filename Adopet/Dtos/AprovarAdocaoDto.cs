@@ -1,9 +1,9 @@
-﻿using Adopet.Attributes;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Adopet.Dtos;
 
 public record AprovarAdocaoDto
 {
-    [CustomRequiredAttribute]
+    [Required]
     public long IdAdocao { get; init; }
 }

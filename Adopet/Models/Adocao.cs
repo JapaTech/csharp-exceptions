@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Adopet.Attributes;
 using Adopet.Models.Enums;
 
 namespace Adopet.Models;
@@ -7,12 +6,12 @@ namespace Adopet.Models;
 public class Adocao
 {
     [Key]
-    [CustomRequiredAttribute]
+    [Required]
     public long Id { get; set; }
-    [CustomRequiredAttribute]
+    [Required]
     public long TutorId { get; set; }
     public virtual Tutor Tutor { get; set; }
-    [CustomRequiredAttribute]
+    [Required]
     public long PetId { get; set; }
     public virtual Pet Pet { get; set; }
     public string Motivo { get; set; }

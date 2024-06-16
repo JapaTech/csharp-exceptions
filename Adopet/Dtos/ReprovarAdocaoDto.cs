@@ -1,16 +1,15 @@
-﻿using Adopet.Attributes;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace Adopet.Dtos;
 
 public record ReprovarAdocaoDto
 {
-    [CustomRequiredAttribute]
+    [Required]
     [JsonPropertyName("idAdocao")]
     public long IdAdocao { get; init; }
 
-    [CustomRequiredAttribute]
+    [Required]
     [StringLength(int.MaxValue, MinimumLength = 1)]
     [JsonPropertyName("justificativa")]
     public string Justificativa { get; init; }

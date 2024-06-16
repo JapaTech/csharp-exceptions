@@ -1,5 +1,4 @@
 ﻿using Adopet.Api.Dto;
-using Adopet.Attributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace Adopet.Models;
@@ -7,11 +6,11 @@ namespace Adopet.Models;
 public class Tutor
 {
     [Key]
-    [CustomRequiredAttribute]
+    [Required]
     public long Id { get; set; }
-    [CustomRequiredAttribute]
+    [Required]
     public string Nome { get; set; }
-    [CustomRequiredAttribute]
+    [Required]
     public string Email { get; set; }
 
     public virtual List<Adocao> Adocoes { get; set; }
