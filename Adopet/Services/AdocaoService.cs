@@ -1,4 +1,5 @@
 ﻿using Adopet.Dtos;
+using Adopet.Exceptions;
 using Adopet.Models;
 using Adopet.Models.Enums;
 using Adopet.Repositories;
@@ -33,7 +34,27 @@ public class AdocaoService
         var pet = _petRepository.GetById(dto.IdPet);
         var tutor = _tutorRepository.GetById(dto.IdTutor);
 
-        _adocaoRepository.Add(new Adocao(tutor, pet, dto.Motivo));
+        if(pet == null || tutor == null)
+        {
+            throw new NullReferenceException();
+        }
+
+        if (pet.Adotado)
+        {
+            throw new PetAdotadoException("Pet já foi adotado!", new ApplicationException());
+        }
+        if(_adocaoRepository.ExistsByPetIdAndStatus(pet.Id, StatusAdocao.AGUARDANDO_AVALIACAO))
+        {
+            throw new PetEmProcessoDeAdocaoException("Pet está sob processo de adoção!");
+        }
+        var numeroDeAdocoes = _adocaoRepository.
+               CountByTutorIdAndStatus(tutor.Id, StatusAdocao.APROVADO);
+        if (numeroDeAdocoes >= 2)
+        {
+            throw new TutorComLimiteAtingidoException("Tutor não pode mais adotar!");
+        }
+
+        _adocaoRepository.Add(new Adocao(null, pet, dto.Motivo));           
     }
 
     public void Aprovar(AprovarAdocaoDto dto)
@@ -47,6 +68,7 @@ public class AdocaoService
     public void Reprovar(ReprovarAdocaoDto dto)
     {
         var adocao = _adocaoRepository.GetById(dto.IdAdocao);
+        if(adocao.Status == StatusAdocao.APROVADO)
         adocao.MarcarComoReprovada(dto.Justificativa);
         _adocaoRepository.SaveChanges();
     }
