@@ -37,15 +37,6 @@ public class AdocaoController : ControllerBase
         return Ok("Adoção solicitada com sucesso!");
     }
 
-    public IActionResult SolicitarRascunho([FromBody] SolicitacaoDeAdocaoDto dados)
-    {
-
-            _acaoService.Solicitar(dados);
-            return Ok("Adoção solicitada com sucesso!");
-        
-
-    }
-
     [HttpPut("aprovar")]
     public IActionResult Aprovar([FromBody] AprovarAdocaoDto dto)
     {

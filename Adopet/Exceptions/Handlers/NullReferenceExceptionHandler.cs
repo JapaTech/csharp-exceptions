@@ -5,27 +5,26 @@ namespace Adopet.Exceptions.Handlers;
 
 public class NullReferenceExceptionHandler : IExceptionHandler
 {
-    public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, 
+    public ValueTask<bool> TryHandleAsync(HttpContext httpContext, 
         Exception exception, 
         CancellationToken cancellationToken)
     {
         if (exception is not NullReferenceException)
         {
-            return false;
+            return ValueTask.FromResult(false);
         }
 
-        var detalhes = new ProblemDetails
+        var problemDetails = new ProblemDetails
         {
             Title = "Falha ao encontrar objeto solicitado!",
             Status = StatusCodes.Status404NotFound,
             Detail = exception.Message
         };
 
-        httpContext.Response.StatusCode = detalhes.Status.Value;
+        httpContext.Response.StatusCode = problemDetails.Status.Value;
 
-        await httpContext.Response.WriteAsJsonAsync(detalhes);
+        httpContext.Response.WriteAsJsonAsync(problemDetails).Wait();
 
-        return true;
-
+        return ValueTask.FromResult(true);
     }
 }
