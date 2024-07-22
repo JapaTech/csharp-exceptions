@@ -30,8 +30,14 @@ public class AdocaoService
 
     public void Solicitar(SolicitacaoDeAdocaoDto dto)
     {
+
         var pet = _petRepository.GetById(dto.IdPet);
         var tutor = _tutorRepository.GetById(dto.IdTutor);
+
+        if(pet == null || tutor == null)
+        {
+            throw new NullReferenceException();
+        }
 
         _adocaoRepository.Add(new Adocao(tutor, pet, dto.Motivo));
     }
