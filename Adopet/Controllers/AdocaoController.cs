@@ -1,4 +1,5 @@
 ﻿using Adopet.Dtos;
+using Adopet.Exceptions;
 using Adopet.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,11 +42,17 @@ public class AdocaoController : ControllerBase
         {
             return NotFound("Falha ao encontrar objeto solicitado!");
         }
+        catch (Exception ex) when (ex is PetAdotadoException 
+            || ex is PetEmProcessoDeAdocaoException 
+            || ex is TutorComLimiteAtingidoException)
+        {
+            return BadRequest("Houve uma falha no processo de adoção!");
+        }
         catch (Exception ex)
         {
             return StatusCode(StatusCodes.Status500InternalServerError,
                 "Falha interna na aplicação!");
-        }     
+        } 
     }
 
     [HttpPut("aprovar")]
