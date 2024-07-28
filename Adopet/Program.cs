@@ -24,8 +24,6 @@ builder.Services.AddScoped<ImageStorageService>();
 
 var app = builder.Build();
 
-app.UseExceptionHandler(_ => { });
-
 app.UseHttpsRedirection();
 app.MapControllers();
 app.Run();
