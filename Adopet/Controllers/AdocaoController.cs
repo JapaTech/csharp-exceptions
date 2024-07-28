@@ -44,7 +44,6 @@ public class AdocaoController : ControllerBase
         }
         catch (AdocaoException ex)
         {
-            Console.WriteLine(ex);
             return BadRequest("Houve um problema no processo de adoção!");
         }           
         catch (Exception ex)
