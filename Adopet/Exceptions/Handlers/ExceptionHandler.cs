@@ -3,22 +3,22 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Adopet.Exceptions.Handlers;
 
-public class NullReferenceExceptionHandler : IExceptionHandler
+public class ExceptionHandler : IExceptionHandler
 {
     public ValueTask<bool> TryHandleAsync(
         HttpContext httpContext, 
         Exception exception, 
         CancellationToken cancellationToken)
     {
-        if(exception is not NullReferenceException)
+        if(exception is not Exception)
         {
             return ValueTask.FromResult(false);
         }
 
         ProblemDetails problemDetails = new ProblemDetails
         {
-            Title = "Falha ao encontrar objeto solicitado!",
-            Status = StatusCodes.Status404NotFound,
+            Title = "Falha interna na aplicação!",
+            Status = StatusCodes.Status500InternalServerError,
             Detail = exception.Message
         };
 

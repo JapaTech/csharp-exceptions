@@ -3,22 +3,22 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Adopet.Exceptions.Handlers;
 
-public class NullReferenceExceptionHandler : IExceptionHandler
+public class AdocaoExceptionHandler : IExceptionHandler
 {
     public ValueTask<bool> TryHandleAsync(
         HttpContext httpContext, 
         Exception exception, 
         CancellationToken cancellationToken)
     {
-        if(exception is not NullReferenceException)
+        if(exception is not AdocaoException)
         {
             return ValueTask.FromResult(false);
         }
 
         ProblemDetails problemDetails = new ProblemDetails
         {
-            Title = "Falha ao encontrar objeto solicitado!",
-            Status = StatusCodes.Status404NotFound,
+            Title = "Houve um problema no processo de adoção!",
+            Status = StatusCodes.Status400BadRequest,
             Detail = exception.Message
         };
 

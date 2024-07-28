@@ -33,6 +33,7 @@ public class AdocaoController : ControllerBase
     [HttpPost]
     public IActionResult Solicitar([FromBody] SolicitacaoDeAdocaoDto dados)
     {
+
         _acaoService.Solicitar(dados);
         return Ok("Adoção solicitada com sucesso!");
     }
