@@ -26,6 +26,7 @@ builder.Services.AddExceptionHandler<NullReferenceExceptionHandler>();
 builder.Services.AddExceptionHandler<AdocaoExceptionHandler>();
 builder.Services.AddExceptionHandler<ExceptionHandler>();
 
+//builder.WebHost.UseUrls("http://localhost:8080");
 var app = builder.Build();
 
 app.UseExceptionHandler(_ => { });

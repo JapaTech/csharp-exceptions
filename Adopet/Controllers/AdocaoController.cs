@@ -33,9 +33,26 @@ public class AdocaoController : ControllerBase
     [HttpPost]
     public IActionResult Solicitar([FromBody] SolicitacaoDeAdocaoDto dados)
     {
+            _acaoService.Solicitar(dados);
+            return Ok("Adoção solicitada com sucesso!");
+        //try
+        //{
 
-        _acaoService.Solicitar(dados);
-        return Ok("Adoção solicitada com sucesso!");
+        //}
+        //catch (NullReferenceException)
+        //{
+        //    return NotFound("Falha ao encontrar o objeto solicitado");
+        //}
+        //catch (AdocaoException)
+        //{
+
+        //    return BadRequest("Houve um erro na adoção");
+        //}
+        //catch (Exception ex) 
+        //{
+        //    return StatusCode(StatusCodes.Status510NotExtended, "Falha na aplicação: " + ex.Message);
+        //}
+        
     }
 
     [HttpPut("aprovar")]

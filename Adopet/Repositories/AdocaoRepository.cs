@@ -1,6 +1,7 @@
 ﻿using Adopet.Data;
 using Adopet.Models;
 using Adopet.Models.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace Adopet.Repositories;
 
@@ -25,8 +26,18 @@ public class AdocaoRepository
 
     public void Add(Adocao adocao)
     {
-        _dbContext.Adocoes.Add(adocao);
-        _dbContext.SaveChanges();
+        try
+        {
+            _dbContext.Adocoes.Add(adocao);
+            _dbContext.SaveChanges();
+        }
+        catch (DbUpdateException ex)
+        {
+            // Log a exceção interna para ver detalhes
+            var innerMessage = ex.InnerException?.Message;
+            Console.WriteLine($"***********Erro ao salvar: {innerMessage}");
+            
+        }
     }
 
     public bool ExistsByPetIdAndStatus(long idPet, StatusAdocao statusAdocao)

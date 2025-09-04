@@ -31,19 +31,19 @@ public class AdocaoService
 
     public void Solicitar(SolicitacaoDeAdocaoDto dto)
     {
+
         var pet = _petRepository.GetById(dto.IdPet);
         var tutor = _tutorRepository.GetById(dto.IdTutor);
 
-        if(pet == null || tutor == null)
+        if (pet == null || tutor == null)
         {
-            throw new NullReferenceException();
+            throw new NullReferenceException("Pet ou tutor não encontrados");
         }
-
         if (pet.Adotado)
         {
             throw new PetAdotadoException("Pet já foi adotado!", new ApplicationException());
         }
-        if(_adocaoRepository.ExistsByPetIdAndStatus(pet.Id, StatusAdocao.AGUARDANDO_AVALIACAO))
+        if (_adocaoRepository.ExistsByPetIdAndStatus(pet.Id, StatusAdocao.AGUARDANDO_AVALIACAO))
         {
             throw new PetEmProcessoDeAdocaoException("Pet está sob processo de adoção!");
         }
@@ -54,8 +54,9 @@ public class AdocaoService
             throw new TutorComLimiteAtingidoException("Tutor não pode mais adotar!");
         }
 
-        _adocaoRepository.Add(new Adocao(null, pet, dto.Motivo));           
-    }
+        _adocaoRepository.Add(new Adocao(tutor, pet, dto.Motivo));      
+
+    }   
 
     public void Aprovar(AprovarAdocaoDto dto)
     {
@@ -68,8 +69,8 @@ public class AdocaoService
     public void Reprovar(ReprovarAdocaoDto dto)
     {
         var adocao = _adocaoRepository.GetById(dto.IdAdocao);
-        if(adocao.Status == StatusAdocao.APROVADO)
-        adocao.MarcarComoReprovada(dto.Justificativa);
+        if (adocao.Status == StatusAdocao.APROVADO)
+            adocao.MarcarComoReprovada(dto.Justificativa);
         _adocaoRepository.SaveChanges();
     }
 }

@@ -7,6 +7,11 @@ public class ImageStorageService
     public ImageStorageService(IWebHostEnvironment webHostEnvironment)
     {
         _uploadFolder = Path.Combine(webHostEnvironment.ContentRootPath, "storage");
+        Console.WriteLine(_uploadFolder);
+        if (!Directory.Exists(_uploadFolder))
+        {
+            Directory.CreateDirectory(_uploadFolder);
+        }
     }
 
     public string Upload(IFormFile imagem)
